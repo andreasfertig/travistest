@@ -33,9 +33,7 @@ matrix:
      env: COMPILER=clang++ COMPILER_CC='clang' LLVM_CONFIG='/usr/bin/llvm-config'
       
 install:
- - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      brew install cmake || brew upgrade cmake
-    fi
+ - ./"${TRAVIS_BUILD_DIR}"/scripts/travis_install.sh
 
 before_script:
   - export CXX=${COMPILER}
