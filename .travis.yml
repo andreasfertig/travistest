@@ -8,6 +8,11 @@ common_sources: &all_sources
 matrix:
   include:
 
+    - env: COMPILER=clang++ COMPILER_CC='clang' LLVM_CONFIG='/usr/bin/llvm-config'
+      os: osx
+      osx_image: xcode9.3
+      compiler: clang
+      
     # 1/ Linux Clang Builds
     - os: linux
       compiler: clang
@@ -26,10 +31,6 @@ matrix:
           packages: ['g++-8', 'clang-7', 'libstdc++-6-dev', 'llvm-7-dev', 'libclang-7-dev', 'zlib1g-dev']
       env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
 
-   - os: osx
-     osx_image: xcode9.3
-     compiler: clang
-     env: COMPILER=clang++ COMPILER_CC='clang' LLVM_CONFIG='/usr/bin/llvm-config'
       
 install:
   - ./${TRAVIS_BUILD_DIR}/scripts/travis_install.sh
