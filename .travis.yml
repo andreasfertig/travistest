@@ -15,7 +15,7 @@ matrix:
           apt:
               sources: *all_sources
               packages: ['clang-7', 'libstdc++-6-dev', 'llvm-7-dev', 'libclang-7-dev', 'zlib1g-dev']
-      env: COMPILER='clang++-7' COMPILER_CC='clang-7'
+      env: COMPILER='clang++-7' COMPILER_CC='clang-7' LLVM_CONFIG='/usr/bin/llvm-config-7'
 
     # 2/ Linux GCC Builds
     - os: linux
@@ -24,17 +24,27 @@ matrix:
         apt:
           sources: *all_sources
           packages: ['g++-8', 'clang-7', 'libstdc++-6-dev', 'llvm-7-dev', 'libclang-7-dev', 'zlib1g-dev']
-      env: COMPILER='g++-8' COMPILER_CC='gcc-8'
+      env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
 
+
+   - os: osx
+     osx_image: xcode9.3
+     compiler: clang
+     env: COMPILER=clang++ COMPILER_CC='clang' LLVM_CONFIG='/usr/bin/llvm-config'
+      
 install:
-    
+ - |
+    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      brew install cmake || brew upgrade cmake
+    fi
+
 before_script:
   - export CXX=${COMPILER}
   - export CC=${COMPILER_CC}
   - cd "${TRAVIS_BUILD_DIR}"
   - mkdir build
   - cd build
-  - cmake -DINSIGHT_LLVM_CONFIG=/usr/bin/llvm-config-7  ..
+  - cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
 
 script:
-  - make -j 2 VERBOSE=1
+  - make -j VERBOSE=1
