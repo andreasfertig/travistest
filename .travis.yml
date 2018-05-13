@@ -8,7 +8,7 @@ common_sources: &all_sources
 matrix:
   include:
 
-    - env: COMPILER=clang++ COMPILER_CC='clang' LLVM_CONFIG='/usr/bin/llvm-config'
+    - env: COMPILER=clang++ COMPILER_CC='clang' LLVM_CONFIG='llvm-config'
       os: osx
       osx_image: xcode9.3
       compiler: clang
