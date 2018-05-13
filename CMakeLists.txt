@@ -61,6 +61,8 @@ add_definitions(-std=c++1z)
 
 add_executable(travistest main.cpp)
 
+link_directories(${LLVM_LIBDIR})
+
 target_link_libraries(travistest
   PRIVATE
   clangTooling
