@@ -37,4 +37,4 @@ before_script:
   - cmake -DINSIGHT_LLVM_CONFIG=/usr/bin/llvm-config-7  ..
 
 script:
-  - make -j 2
+  - make -j 2 VERBOSE=1
