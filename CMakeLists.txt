@@ -59,8 +59,6 @@ add_definitions(-std=c++1z)
     llvm_config(LLVM_PACKAGE_VERSION "--version")
     
 
-add_executable(travistest main.cpp)
-
 link_directories(${LLVM_LIBDIR})
 
 target_link_libraries(travistest
@@ -86,4 +84,8 @@ target_link_libraries(travistest
         ${LLVM_LIBS}
         ${LLVM_SYSTEM_LIBS}
     )
+
+
+add_executable(travistest main.cpp)
+
 
