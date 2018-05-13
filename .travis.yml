@@ -33,7 +33,7 @@ matrix:
 
       
 install:
-  - ./${TRAVIS_BUILD_DIR}/scripts/travis_install.sh
+  - ${TRAVIS_BUILD_DIR}/scripts/travis_install.sh
 
 before_script:
   - export CXX=${COMPILER}
