@@ -28,7 +28,8 @@ matrix:
       env: COMPILER='g++-8'
 
 install:
-  - ls -lR /usr
+  - apt-cache search llvm
+  - apt-cache search clang
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
   - |
