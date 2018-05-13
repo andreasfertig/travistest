@@ -14,7 +14,6 @@ matrix:
       addons:
           apt:
               sources: *all_sources
-              #              packages: ['clang-7.0']
               packages: ['clang-7', 'libstdc++-6-dev', 'llvm-7-dev', 'libclang-7-dev', 'zlib1g-dev']
       env: COMPILER='clang++-7' COMPILER_CC='clang-7'
 
@@ -24,16 +23,18 @@ matrix:
       addons: &gcc8
         apt:
           sources: *all_sources
-          packages: ['g++-8', 'libstdc++-6-dev', 'llvm-7-dev', 'libclang-7-dev', 'zlib1g-dev']
+          packages: ['g++-8', 'clang-7', 'libstdc++-6-dev', 'llvm-7-dev', 'libclang-7-dev', 'zlib1g-dev']
       env: COMPILER='g++-8' COMPILER_CC='gcc-8'
 
 install:
     
 before_script:
   - export CXX=${COMPILER}
-  - export CCC=${COMPILER_CC}
+  - export CC=${COMPILER_CC}
   - cd "${TRAVIS_BUILD_DIR}"
-  - (mkdir build && cd build && cmake -DINSIGHT_LLVM_CONFIG=/usr/bin/llvm-config-7  .. )
+  - mkdir build
+  - cd build
+  - cmake -DINSIGHT_LLVM_CONFIG=/usr/bin/llvm-config-7  ..
 
 script:
   - cd build
