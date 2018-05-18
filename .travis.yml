@@ -8,10 +8,10 @@ common_sources: &all_sources
 matrix:
   include:
 
-      - env: COMPILER='${TRAVIS_BUILD_DIR}/clang/bin/clang++' COMPILER_CC='${TRAVIS_BUILD_DIR}/clang/bin/clang' LLVM_CONFIG='${TRAVIS_BUILD_DIR}/clang/bin/llvm-config'
-          os: osx
-          osx_image: xcode9.3
-          compiler: clang
+    - env: COMPILER='${TRAVIS_BUILD_DIR}/clang/bin/clang++' COMPILER_CC='${TRAVIS_BUILD_DIR}/clang/bin/clang' LLVM_CONFIG='${TRAVIS_BUILD_DIR}/clang/bin/llvm-config'
+      os: osx
+      osx_image: xcode9.3
+      compiler: clang
       
     # 1/ Linux Clang Builds
     - os: linux
