@@ -12,6 +12,7 @@ if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
    xz -vd clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
    ls -l
    tar -vxf clang+llvm-6.0.0-x86_64-apple-darwin.tar
-   ls -lR
+   #ls -lR
+   mv clang+llvm-6.0.0-x86_64-apple-darwin clang
 fi
 
