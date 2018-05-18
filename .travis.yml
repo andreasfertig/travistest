@@ -39,6 +39,7 @@ before_script:
   - export CXX=${COMPILER}
   - export CC=${COMPILER_CC}
   - env
+  - echo $CXX
   - cd "${TRAVIS_BUILD_DIR}"
   - mkdir build
   - cd build
