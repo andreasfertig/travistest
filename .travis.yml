@@ -36,14 +36,14 @@ install:
   - ${TRAVIS_BUILD_DIR}/scripts/travis_install.sh
 
 before_script:
-  - export CXX=`echo ${COMPILER}`
-  - export CC=`echo ${COMPILER_CC}`
+  - export CXX=${!COMPILER}
+  - export CC=${!COMPILER_CC}
   - env
   - echo $CXX
   - cd "${TRAVIS_BUILD_DIR}"
   - mkdir build
   - cd build
-  - cmake -DINSIGHT_LLVM_CONFIG=`echo ${LLVM_CONFIG}` ..
+  - cmake -DINSIGHT_LLVM_CONFIG=${!LLVM_CONFIG} ..
 
 script:
   - make -j VERBOSE=1
