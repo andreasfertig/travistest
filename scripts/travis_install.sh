@@ -9,8 +9,9 @@ if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
    wget https://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
 
    xz -vd clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
-   ls -l
    tar -xf clang+llvm-6.0.0-x86_64-apple-darwin.tar
    mv clang+llvm-6.0.0-x86_64-apple-darwin current
+
+   ls -l ${TRAVIS_BUILD_DIR}/clang/current/bin/clang
 fi
 
