@@ -8,7 +8,7 @@ common_sources: &all_sources
 matrix:
   include:
 
-    - env: COMPILER='${TRAVIS_BUILD_DIR}/clang/current/bin/clang++' COMPILER_CC='${TRAVIS_BUILD_DIR}/clang/current/bin/clang' LLVM_CONFIG='${TRAVIS_BUILD_DIR}/clang/current/bin/llvm-config'
+    - env: COMPILER='/Users/travis/build/andreasfertig/travistest/clang/current/bin/clang++' COMPILER_CC='/Users/travis/build/andreasfertig/travistest/clang/current/bin/clang' LLVM_CONFIG='/Users/travis/build/andreasfertig/travistest/clang/current/bin/llvm-config'
       os: osx
       osx_image: xcode9.3
       compiler: clang
@@ -36,14 +36,14 @@ install:
   - ${TRAVIS_BUILD_DIR}/scripts/travis_install.sh
 
 before_script:
-  - export CXX=${!COMPILER}
-  - export CC=${!COMPILER_CC}
+  - export CXX=${COMPILER}
+  - export CC=${COMPILER_CC}
   - env
   - echo $CXX
   - cd "${TRAVIS_BUILD_DIR}"
   - mkdir build
   - cd build
-  - cmake -DINSIGHT_LLVM_CONFIG=${!LLVM_CONFIG} ..
+  - cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
 
 script:
   - make -j VERBOSE=1
