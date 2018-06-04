@@ -57,5 +57,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: andreasfertig/travistest
-     condition: $TRAVIS_OS_NAME = linux
-     tags: true
+    condition: $TRAVIS_OS_NAME = linux
+    tags: true
