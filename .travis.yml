@@ -1,49 +1,72 @@
 language: cpp
 sudo: false
-
-common_sources: &all_sources
-  - ubuntu-toolchain-r-test
-  - llvm-toolchain-trusty
-
+common_sources: &1
+- ubuntu-toolchain-r-test
+- llvm-toolchain-trusty
 matrix:
   include:
-
-    - env: COMPILER='/Users/travis/build/andreasfertig/travistest/clang/current/bin/clang++' COMPILER_CC='/Users/travis/build/andreasfertig/travistest/clang/current/bin/clang' LLVM_CONFIG='/Users/travis/build/andreasfertig/travistest/clang/current/bin/llvm-config'
-      os: osx
-      osx_image: xcode9.3
-      compiler: clang
-      
-    # 1/ Linux Clang Builds
-    - os: linux
-      compiler: clang
-      addons:
-          apt:
-              sources: *all_sources
-              packages: ['clang-7', 'libstdc++-6-dev', 'llvm-7-dev', 'libclang-7-dev', 'zlib1g-dev']
-      env: COMPILER='clang++-7' COMPILER_CC='clang-7' LLVM_CONFIG='/usr/bin/llvm-config-7'
-
-    # 2/ Linux GCC Builds
-    - os: linux
-      compiler: gcc
-      addons: &gcc8
-        apt:
-          sources: *all_sources
-          packages: ['g++-8', 'clang-7', 'libstdc++-6-dev', 'llvm-7-dev', 'libclang-7-dev', 'zlib1g-dev']
-      env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
-
-      
+  - env: COMPILER='/Users/travis/build/andreasfertig/travistest/clang/current/bin/clang++'
+      COMPILER_CC='/Users/travis/build/andreasfertig/travistest/clang/current/bin/clang'
+      LLVM_CONFIG='/Users/travis/build/andreasfertig/travistest/clang/current/bin/llvm-config'
+    os: osx
+    osx_image: xcode9.3
+    compiler: clang
+  - os: linux
+    compiler: clang
+    addons:
+      apt:
+        sources: *1
+        packages:
+        - clang-7
+        - libstdc++-6-dev
+        - llvm-7-dev
+        - libclang-7-dev
+        - zlib1g-dev
+    env: COMPILER='clang++-7' COMPILER_CC='clang-7' LLVM_CONFIG='/usr/bin/llvm-config-7'
+  - os: linux
+    compiler: gcc
+    addons:
+      apt:
+        sources: *1
+        packages:
+        - g++-8
+        - clang-7
+        - libstdc++-6-dev
+        - llvm-7-dev
+        - libclang-7-dev
+        - zlib1g-dev
+    env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
 install:
-  - ${TRAVIS_BUILD_DIR}/scripts/travis_install.sh
-
+- "${TRAVIS_BUILD_DIR}/scripts/travis_install.sh"
 before_script:
-  - export CXX=${COMPILER}
-  - export CC=${COMPILER_CC}
-  - env
-  - echo $CXX
-  - cd "${TRAVIS_BUILD_DIR}"
-  - mkdir build
-  - cd build
-  - cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
-
+- export CXX=${COMPILER}
+- export CC=${COMPILER_CC}
+- env
+- echo $CXX
+- cd "${TRAVIS_BUILD_DIR}"
+- mkdir build
+- cd build
+- cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
 script:
-  - make -j VERBOSE=1
+- make -j VERBOSE=1
+deploy:
+  provider: releases
+  api_key:
+    secure: QnFBjBWMyn6A9Cs+cf8tDNyVmQkbig3YW6IfJcjsXQ57hMNTqrKOyvUMNAIxyxDL3sh5HrBAkeaVRI0uiGOwCQaigBg4tMEdjTZfiH9pNjKpbZli8OUB3I0LPMSmYkIZRQiN/A5BsuyFpXMCwMgg0wwSc8HgjZBuzBXMSlC26O8rXD62ZTT7ZKYGovOW5GX7UuxUTZ4UvUUycMajZjteuYQgnsXI8aNQaWO8pV7wuI2+ayHKvKVS6OSBzrlXkb74GIK37ltSjbNJbS31mpdd81NfJE7HQK9Kfqwrsr852uTEbeiZoe6sOT0CajaPpmkEUjR/WrCptXZuvtpNppQLQSTLLJXVRoUM8PyGAbtWGU+fTz4wFcvJgEBWKlwpSEqVr8KvPs4GzAJi4RfG8Q2Lwd86Xtdu/1S8mHJ5xTGO3FNw6xvrM5JVCg8g7rfrJGrBF8vCY+XE/YJKpXly3ZoPPPGx0lAyElvBveMQnyaMYvdI1BAGoosrKOAUPDDzUqptwWKb/g/DgUVyKS0srK12x9baFep7Vk693jcpAKmt5EKewFBcbJKdIlWWrp+5ZJvbOCeWjdn4DPc0WPNha+Mz5ahaCUm2AWml9a1KEAj0ApqD0UsrysNjzw0EloRwapTMXnWVwcMIF9ZFcmf7xkPfgl1qvYbJ6E9xxwEYnifAWNw=
+  file: build/travistest
+  skip_cleanup: true
+  on:
+    repo: andreasfertig/travistest
+     condition: $TRAVIS_OS_NAME = linux
+     tags: true
+
+  provider: releases
+  api_key:
+    secure: QnFBjBWMyn6A9Cs+cf8tDNyVmQkbig3YW6IfJcjsXQ57hMNTqrKOyvUMNAIxyxDL3sh5HrBAkeaVRI0uiGOwCQaigBg4tMEdjTZfiH9pNjKpbZli8OUB3I0LPMSmYkIZRQiN/A5BsuyFpXMCwMgg0wwSc8HgjZBuzBXMSlC26O8rXD62ZTT7ZKYGovOW5GX7UuxUTZ4UvUUycMajZjteuYQgnsXI8aNQaWO8pV7wuI2+ayHKvKVS6OSBzrlXkb74GIK37ltSjbNJbS31mpdd81NfJE7HQK9Kfqwrsr852uTEbeiZoe6sOT0CajaPpmkEUjR/WrCptXZuvtpNppQLQSTLLJXVRoUM8PyGAbtWGU+fTz4wFcvJgEBWKlwpSEqVr8KvPs4GzAJi4RfG8Q2Lwd86Xtdu/1S8mHJ5xTGO3FNw6xvrM5JVCg8g7rfrJGrBF8vCY+XE/YJKpXly3ZoPPPGx0lAyElvBveMQnyaMYvdI1BAGoosrKOAUPDDzUqptwWKb/g/DgUVyKS0srK12x9baFep7Vk693jcpAKmt5EKewFBcbJKdIlWWrp+5ZJvbOCeWjdn4DPc0WPNha+Mz5ahaCUm2AWml9a1KEAj0ApqD0UsrysNjzw0EloRwapTMXnWVwcMIF9ZFcmf7xkPfgl1qvYbJ6E9xxwEYnifAWNw=
+  file: build/travistest
+  skip_cleanup: true
+  on:
+    repo: andreasfertig/travistest
+     condition: $TRAVIS_OS_NAME = osx
+     tags: true
+
