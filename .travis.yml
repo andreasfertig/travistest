@@ -11,7 +11,6 @@ matrix:
     os: osx
     osx_image: xcode9.3
     compiler: clang
-    env: DEPLOY="Yes"
   - os: linux
     compiler: clang
     addons:
@@ -69,5 +68,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: andreasfertig/travistest
-    condition: $TRAVIS_OS_NAME = osx && $DEPLOY = Yes
+    condition: $TRAVIS_OS_NAME = osx 
     tags: true
