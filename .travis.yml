@@ -48,6 +48,7 @@ before_script:
 - cd build
 - cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
 script:
+- export TAG_NAME=$(git describe --exact-match)
 - make -j VERBOSE=1
 deploy:
   provider: releases
@@ -58,8 +59,7 @@ deploy:
   on:
     repo: andreasfertig/travistest
     branch: master
-    condition: $TRAVIS_OS_NAME = linux -a $DEPLOY = Yes
-    tags: true
+    condition: $TRAVIS_OS_NAME = linux AND $DEPLOY = Yes
 
 deploy:
   provider: releases
@@ -70,5 +70,4 @@ deploy:
   on:
     repo: andreasfertig/travistest
     branch: master
-    condition: $TRAVIS_OS_NAME = osx 
-    tags: true
+    condition: -n $TAG_NAME AND $TRAVIS_OS_NAME = osx
