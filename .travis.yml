@@ -63,7 +63,7 @@ after_success:
     fi
   - |
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]] && [[ -n $TAG_NAME ]]; then
-      bash upload.sh ${TRAVIS_BUILD_DIR}/travistest
+      bash upload.sh ${TRAVIS_BUILD_DIR}/build/travistest
     fi
 
 env:
