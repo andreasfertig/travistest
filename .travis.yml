@@ -22,7 +22,8 @@ matrix:
         - llvm-7-dev
         - libclang-7-dev
         - zlib1g-dev
-    env: COMPILER='clang++-7' COMPILER_CC='clang-7' LLVM_CONFIG='/usr/bin/llvm-config-7' DEPLOY="Yes"
+    env: COMPILER='clang++-7' COMPILER_CC='clang-7' LLVM_CONFIG='/usr/bin/llvm-config-7'
+      DEPLOY="Yes"
   - os: linux
     compiler: gcc
     addons:
@@ -48,24 +49,23 @@ before_script:
 - cd build
 - cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
 script:
-- export TAG_NAME=$(git describe --exact-match)    
+- export TAG_NAME=$(git describe --exact-match)
 - make -j VERBOSE=1
 - |
   if [[ "${TRAVIS_OS_NAME}" == "osx" ]] && [[ -n $TAG_NAME ]]; then
       hdiutil create ${TRAVIS_BUILD_DIR}/test.dmg -srcfolder ${TRAVIS_BUILD_DIR}/build/ -ov
   fi
-
 after_success:
-  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-  - |
-    if [[ "${TRAVIS_OS_NAME}" == "osx" ]] && [[ -n $TAG_NAME ]]; then
-      bash upload.sh ${TRAVIS_BUILD_DIR}/test.dmg
-    fi
-  - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]] && [[ -n $TAG_NAME ]]; then
-      bash upload.sh ${TRAVIS_BUILD_DIR}/build/travistest
-    fi
-
+- wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+- |
+  if [[ "${TRAVIS_OS_NAME}" == "osx" ]] && [[ -n $TAG_NAME ]]; then
+    bash upload.sh ${TRAVIS_BUILD_DIR}/test.dmg
+  fi
+- |
+  if [[ "${TRAVIS_OS_NAME}" == "linux" ]] && [[ -n $TAG_NAME ]]; then
+    bash upload.sh ${TRAVIS_BUILD_DIR}/build/travistest
+  fi
 env:
   global:
-    secure: QnFBjBWMyn6A9Cs+cf8tDNyVmQkbig3YW6IfJcjsXQ57hMNTqrKOyvUMNAIxyxDL3sh5HrBAkeaVRI0uiGOwCQaigBg4tMEdjTZfiH9pNjKpbZli8OUB3I0LPMSmYkIZRQiN/A5BsuyFpXMCwMgg0wwSc8HgjZBuzBXMSlC26O8rXD62ZTT7ZKYGovOW5GX7UuxUTZ4UvUUycMajZjteuYQgnsXI8aNQaWO8pV7wuI2+ayHKvKVS6OSBzrlXkb74GIK37ltSjbNJbS31mpdd81NfJE7HQK9Kfqwrsr852uTEbeiZoe6sOT0CajaPpmkEUjR/WrCptXZuvtpNppQLQSTLLJXVRoUM8PyGAbtWGU+fTz4wFcvJgEBWKlwpSEqVr8KvPs4GzAJi4RfG8Q2Lwd86Xtdu/1S8mHJ5xTGO3FNw6xvrM5JVCg8g7rfrJGrBF8vCY+XE/YJKpXly3ZoPPPGx0lAyElvBveMQnyaMYvdI1BAGoosrKOAUPDDzUqptwWKb/g/DgUVyKS0srK12x9baFep7Vk693jcpAKmt5EKewFBcbJKdIlWWrp+5ZJvbOCeWjdn4DPc0WPNha+Mz5ahaCUm2AWml9a1KEAj0ApqD0UsrysNjzw0EloRwapTMXnWVwcMIF9ZFcmf7xkPfgl1qvYbJ6E9xxwEYnifAWNw=
+  - secure: QnFBjBWMyn6A9Cs+cf8tDNyVmQkbig3YW6IfJcjsXQ57hMNTqrKOyvUMNAIxyxDL3sh5HrBAkeaVRI0uiGOwCQaigBg4tMEdjTZfiH9pNjKpbZli8OUB3I0LPMSmYkIZRQiN/A5BsuyFpXMCwMgg0wwSc8HgjZBuzBXMSlC26O8rXD62ZTT7ZKYGovOW5GX7UuxUTZ4UvUUycMajZjteuYQgnsXI8aNQaWO8pV7wuI2+ayHKvKVS6OSBzrlXkb74GIK37ltSjbNJbS31mpdd81NfJE7HQK9Kfqwrsr852uTEbeiZoe6sOT0CajaPpmkEUjR/WrCptXZuvtpNppQLQSTLLJXVRoUM8PyGAbtWGU+fTz4wFcvJgEBWKlwpSEqVr8KvPs4GzAJi4RfG8Q2Lwd86Xtdu/1S8mHJ5xTGO3FNw6xvrM5JVCg8g7rfrJGrBF8vCY+XE/YJKpXly3ZoPPPGx0lAyElvBveMQnyaMYvdI1BAGoosrKOAUPDDzUqptwWKb/g/DgUVyKS0srK12x9baFep7Vk693jcpAKmt5EKewFBcbJKdIlWWrp+5ZJvbOCeWjdn4DPc0WPNha+Mz5ahaCUm2AWml9a1KEAj0ApqD0UsrysNjzw0EloRwapTMXnWVwcMIF9ZFcmf7xkPfgl1qvYbJ6E9xxwEYnifAWNw=
+  - secure: U9D3UKGgFtXcOeijwEaBixTs27K4ij8c4+duHIg2Kx4onT3yB+iJW8gPw7w9cg9P+HXeCcA9+kV+rR+v2L7wkxn18UFnrHDYu+pvIu52/wQ2h85GWj3z29TYFH0Kttom3XpeX0VzEGmL8irntvJyrwbWtVxjougIe0LUXZyv51gjsg4FvPRzUqh/9aJhuS6+3dRWuT03JoZ1Cw8bSX22KqeUT4tLz13HZDHfmNd5lGANTG1NDQUhUkDY/ydsWnIUeyJ0jtNroECsXocc7b/8nR3GSJWnrttflY60vMYClXwoiA3sBzYzTNXUw8Tc+TRQN/g3lmnLt2J0Y+m13rRClhyaAnCzazZO1GI4sL9pHASYVHlPAnFlTmyaW0U6j0STIwcl4uqfpT8cIIKEusgtFI59xJWTe/Rpgdxf7vui22cutBhjkgwCVHZPJiEVyUZgWSZWxivkt5eEpeRTOcXYZ4MrMaiN36aEKA8HKGETs1DtoLvrv1kaQ7IL3iNwD0QZZnRmka/PRY4h0jh22qfDrYhxD/mJvaEqYIfF/WXUl2TDGpSSIv+AIiiMTxcKvS11RMSbP6ueLXOUyEzhv7WqHow4kVGcoMnSlGFKOdMZr83G3xWnZZBLiI4Tsw2HIA1YMu72ISxPzR8jzmla+T4PKl4rTQkYhDYlP9eQOZ6GeCw=
