@@ -53,17 +53,19 @@ script:
 - make -j VERBOSE=1
 - |
   if [[ "${TRAVIS_OS_NAME}" == "osx" ]] && [[ -n $TAG_NAME ]]; then
-      hdiutil create ${TRAVIS_BUILD_DIR}/test.dmg -srcfolder ${TRAVIS_BUILD_DIR}/build/ -ov
-  fi
-after_success:
-- wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-- |
-  if [[ "${TRAVIS_OS_NAME}" == "osx" ]] && [[ -n $TAG_NAME ]]; then
-    bash upload.sh ${TRAVIS_BUILD_DIR}/test.dmg
+      export GZ_FILE_NAME=${TRAVIS_BUILD_DIR}/insights-macos.tar.gz
   fi
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]] && [[ -n $TAG_NAME ]]; then
-    bash upload.sh ${TRAVIS_BUILD_DIR}/build/travistest
+      export GZ_FILE_NAME=${TRAVIS_BUILD_DIR}/insights-ubuntu-14.04.tar.gz
+  fi
+- tar -czf ${GZ_FILE_NAME} ${TRAVIS_BUILD_DIR}/build/insights
+
+after_success:
+- wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+- |
+  if [[ -n $TAG_NAME ]]; then
+      bash upload.sh ${GZ_FILE_NAME}
   fi
 env:
   global:
