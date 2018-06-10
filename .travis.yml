@@ -59,7 +59,7 @@ script:
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]] && [[ -n $TAG_NAME ]]; then
       export GZ_FILE_NAME=${TRAVIS_BUILD_DIR}/insights-ubuntu-14.04.tar.gz
   fi
-- tar -czf ${GZ_FILE_NAME} ${TRAVIS_BUILD_DIR}/build/insights
+- tar -czf ${GZ_FILE_NAME} ${TRAVIS_BUILD_DIR}/build/travistest
 
 after_success:
 - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
