@@ -52,7 +52,7 @@ install:
     7z x ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar
     rm -f llvm.tar    
     ls -l llvm+clang-8.0.0-win64-msvc-release
-    export "PATH=$PATH;${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin"
+    export "PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin;$PATH"
   fi
 before_script:
 - export CXX=${COMPILER}
