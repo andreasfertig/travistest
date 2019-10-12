@@ -46,6 +46,7 @@ install:
     cd ${TRAVIS_BUILD_DIR}/clang-windows
     #    wget -q --continue --directory-prefix=$HOME/Library/Caches/Homebrew https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/8.0.0/llvm+clang-8.0.0-win64-msvc-release.tar.xz
     wget -q --continue https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/8.0.0/llvm+clang-8.0.0-win64-msvc-release.tar.xz
+    mv llvm+clang-8.0.0-win64-msvc-release.tar.xz llvm.tar.xz
     ls -l
     7z x ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar.xz
     7z x ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar
