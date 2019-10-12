@@ -1,17 +1,7 @@
-cd ${TRAVIS_BUILD_DIR}
-
-if not exist C:\llvm-bin\downloaded ( 
-            md llvm-bin &&
-            cd llvm-bin &&
-            (powershell Start-FileDownload "https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/8.0.0/llvm+clang-8.0.0-win64-msvc-release.tar.xz" -FileName llvm.tar.xz) &&
-            7z x llvm-bin\llvm.tar.xz &&
-            7z x llvm-bin\llvm.tar &&
-            del llvm.tar &&
-            echo "downloaded" > downloaded )
-set PATH=%PATH%;${TRAVIS_BUILD_DIR}\llvm-bin\llvm+clang-8.0.0-win64-msvc-release\bin
+set PATH=${TRAVIS_BUILD_DIR}\clang-windows\llvm+clang-8.0.0-win64-msvc-release\bin;%PATH%
 echo PATH %PATH%
-cd ${TRAVIS_BUILD_DIR}
-md ciuploadtool
-cd ciuploadtool
-curl -fsSL https://github.com/d1vanov/ciuploadtool/releases/download/continuous-master/ciuploadtool_windows_x86.zip -o ciuploadtool_windows_x86.zip
-7z x ciuploadtool_windows_x86.zip
+
+clang++ --version
+${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin/clang++ --version
+
+cmake -G "Visual Studio 15 2017 Win64" -T LLVM -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${TRAVIS_BUILD_DIR}\clang-windows\llvm+clang-8.0.0-win64-msvc-release\bin\llvm-config ..
