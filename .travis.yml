@@ -40,7 +40,7 @@ matrix:
     env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
     install:
       - cd ${TRAVIS_BUILD_DIR}/scripts
-      - cmd.exe /C travis_windows.bat
+      - travis_windows.bat
       - cd ${TRAVIS_BUILD_DIR}
 install:
 - "${TRAVIS_BUILD_DIR}/scripts/travis_install.sh"
