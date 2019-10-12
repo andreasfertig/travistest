@@ -38,12 +38,21 @@ matrix:
     env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
   - os: windows
     env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
-    install:
-      - cd ${TRAVIS_BUILD_DIR}/scripts
-      - travis_windows.bat
-      - cd ${TRAVIS_BUILD_DIR}
 install:
 - "${TRAVIS_BUILD_DIR}/scripts/travis_install.sh"
+- |   
+  if [[ "${TRAVIS_OS_NAME}" == "windows" ]]; then
+    mkdir ${TRAVIS_BUILD_DIR}/clang-windows
+    cd ${TRAVIS_BUILD_DIR}/clang-windows
+    #    wget -q --continue --directory-prefix=$HOME/Library/Caches/Homebrew https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/8.0.0/llvm+clang-8.0.0-win64-msvc-release.tar.xz
+    wget -q --continue https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/8.0.0/llvm+clang-8.0.0-win64-msvc-release.tar.xz
+    ls -l
+    7z x ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar.xz
+    7z x ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar
+    rm -f llvm.tar    
+    ls -l
+    export "PATH=$PATH;${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin"
+  fi
 before_script:
 - export CXX=${COMPILER}
 - export CC=${COMPILER_CC}
