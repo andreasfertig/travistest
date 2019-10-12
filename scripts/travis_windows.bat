@@ -1,7 +1,7 @@
 cd ${TRAVIS_BUILD_DIR}
 
 if not exist C:\llvm-bin\downloaded ( 
-            mkdir llvm-bin &&
+            md llvm-bin &&
             cd llvm-bin &&
             (powershell Start-FileDownload "https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/8.0.0/llvm+clang-8.0.0-win64-msvc-release.tar.xz" -FileName llvm.tar.xz) &&
             7z x llvm-bin\llvm.tar.xz &&
