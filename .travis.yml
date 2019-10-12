@@ -70,8 +70,8 @@ before_script:
     echo $PATH
     clang++ --version
     ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin/clang++ --version
-    # cmake -G "Visual Studio 15 2017 Win64" -T LLVM -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin/llvm-config.exe ..
-    ${TRAVIS_BUILD_DIR}/scripts/travis_windows.bat
+    cmake -G "Visual Studio 15 2017 Win64" -T LLVM -DLLVM_PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin/llvm-config.exe ..
+    #${TRAVIS_BUILD_DIR}/scripts/travis_windows.bat
   else
     cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
   fi
