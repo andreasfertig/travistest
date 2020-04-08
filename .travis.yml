@@ -62,10 +62,7 @@ install:
     #mkdir -p ${TRAVIS_BUILD_DIR}/vs2019
     choco install visualstudio2019community
     # --params "/InstallDir:${TRAVIS_BUILD_DIR}/vs2019"
-    cat C:\ProgramData\chocolatey\logs\chocolatey.log
-    ls -l /c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/
-    ls -l /c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019    
-    #    ls -lR ${TRAVIS_BUILD_DIR}/vs2019
+    ls -l /c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community
     vswhere
   fi
 before_script:
