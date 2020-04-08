@@ -1,5 +1,8 @@
 language: cpp
 sudo: false
+dist: bionic
+
+
 cache:
   directories:
   - ${TRAVIS_BUILD_DIR}/clang-windows
@@ -40,7 +43,7 @@ matrix:
         - zlib1g-dev
     env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
   - os: windows
-    env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
+    env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-10'
 install:
 - "${TRAVIS_BUILD_DIR}/scripts/travis_install.sh"
 - |   
@@ -48,14 +51,14 @@ install:
     mkdir ${TRAVIS_BUILD_DIR}/clang-windows
     cd ${TRAVIS_BUILD_DIR}/clang-windows
     #    wget -q --continue --directory-prefix=$HOME/Library/Caches/Homebrew https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/8.0.0/llvm+clang-8.0.0-win64-msvc-release.tar.xz
-    wget -q --continue https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/8.0.0/llvm+clang-8.0.0-win64-msvc-release.tar.xz
-    mv llvm+clang-8.0.0-win64-msvc-release.tar.xz llvm.tar.xz
+    wget -q --continue https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/10.0.0/llvm+clang-10.0.0-win64-msvc-release.tar.xz
+    mv llvm+clang-10.0.0-win64-msvc-release.tar.xz llvm.tar.xz
     ls -l
     7z x ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar.xz
     7z x ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar
     rm -f llvm.tar    
-    ls -l llvm+clang-8.0.0-win64-msvc-release/bin
-    export "PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin;$PATH"
+    ls -l llvm+clang-10.0.0-win64-msvc-release/bin
+    export "PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin;$PATH"
   fi
 before_script:
 - export CXX=${COMPILER}
@@ -69,8 +72,8 @@ before_script:
   if [[ "${TRAVIS_OS_NAME}" == "windows" ]]; then
     echo $PATH
     clang++ --version
-    ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin/clang++ --version
-    cmake -G "Visual Studio 15 2017 Win64" -T LLVM -DLLVM_PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-8.0.0-win64-msvc-release/bin/llvm-config.exe ..
+    ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/clang++ --version
+    cmake -G "Visual Studio 16 2019" -A x64 -T LLVM_v142 -DLLVM_PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config.exe ..
     #${TRAVIS_BUILD_DIR}/scripts/travis_windows.bat
   else
     cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
