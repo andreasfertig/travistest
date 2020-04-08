@@ -67,9 +67,7 @@ install:
     export VS160COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools"
     wget -q --continue "https://github.com/zufuliu/llvm-utils/releases/download/v19.05/LLVM_VS2017.zip"
     7z x ${TRAVIS_BUILD_DIR}/llvm-utils/LLVM_VS2017.zip
-    ls -lR
-    cmd.exe /C "LLVM_VS2017\install.bat" 1
-    ls -lR /c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community
+    ${TRAVIS_BUILD_DIR}/llvm-utils/LLVM_VS2017\install.bat
   fi
 before_script:
 - export CXX=${COMPILER}
