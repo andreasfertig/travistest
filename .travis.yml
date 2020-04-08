@@ -63,6 +63,7 @@ install:
     choco install visualstudio2019community
     choco install visualstudio2019-workload-nativedesktop
     choco install visualstudio2019buildtools
+    export VS160COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools"
     # --params "/InstallDir:${TRAVIS_BUILD_DIR}/vs2019"
     ls -lR /c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community
   fi
