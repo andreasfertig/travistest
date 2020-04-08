@@ -82,7 +82,7 @@ before_script:
     echo $PATH
     clang++ --version
     ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/clang++ --version
-    cmake -G "Visual Studio 16 2019" -A x64 -T LLVM_v142 -DLLVM_PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config.exe ..
+    cmake -G "Visual Studio 16 2019" -A x64 -T LLVM_v142 -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config.exe ..
     #${TRAVIS_BUILD_DIR}/scripts/travis_windows.bat
   else
     cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
