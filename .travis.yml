@@ -59,12 +59,13 @@ install:
     rm -f llvm.tar    
     ls -l llvm+clang-10.0.0-win64-msvc-release/bin
     export "PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin;$PATH"
-    #mkdir -p ${TRAVIS_BUILD_DIR}/vs2019
     choco install visualstudio2019community
     choco install visualstudio2019-workload-nativedesktop
     choco install visualstudio2019buildtools
     export VS160COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools"
-    # --params "/InstallDir:${TRAVIS_BUILD_DIR}/vs2019"
+    curl -Ls -o "LLVM_VS2017.zip" "https://github.com/zufuliu/llvm-utils/releases/download/v19.05/LLVM_VS2017.zip"
+    7z x -y "LLVM_VS2017.zip" >NUL
+    CALL "LLVM_VS2017\install.bat" 1 
     ls -lR /c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community
   fi
 before_script:
