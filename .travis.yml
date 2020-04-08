@@ -59,10 +59,13 @@ install:
     rm -f llvm.tar    
     ls -l llvm+clang-10.0.0-win64-msvc-release/bin
     export "PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin;$PATH"
-    mkdir -p ${TRAVIS_BUILD_DIR}/vs2019
-    choco install visualstudio2019community --params "/InstallDir:${TRAVIS_BUILD_DIR}/vs2019"
+    #mkdir -p ${TRAVIS_BUILD_DIR}/vs2019
+    choco install visualstudio2019community
+    # --params "/InstallDir:${TRAVIS_BUILD_DIR}/vs2019"
     cat C:\ProgramData\chocolatey\logs\chocolatey.log
-    ls -lR ${TRAVIS_BUILD_DIR}/vs2019
+    ls -l C:\Program Files (x86)\Microsoft Visual Studio\ 
+    ls -l C:\Program Files (x86)\Microsoft Visual Studio\2019    
+    #    ls -lR ${TRAVIS_BUILD_DIR}/vs2019
     vswhere
   fi
 before_script:
