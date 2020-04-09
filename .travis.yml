@@ -57,13 +57,15 @@ install:
         CACHED_LLVM_VERSION="`cat downloaded`"
     fi
 
+    echo "${CACHED_LLVM_VERSION}"
+    
     if [ "${CACHED_LLVM_VERSION}" != "${LLVM_VERSION}" ]; then
         wget -q --continue https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/10.0.0/llvm+clang-10.0.0-win64-msvc-release.tar.xz
         ln -sf llvm+clang-10.0.0-win64-msvc-release.tar.xz llvm.tar.xz
         ls -l
         7z x -y ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar.xz
         7z x -y ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar
-        rm -f llvm.tar
+        rm -f llvm.tar llvm+clang-10.0.0-win64-msvc-release.tar.xz
         echo -n "${LLVM_VERSION}" > downloaded
     else
         echo "LLVM version already installed"
