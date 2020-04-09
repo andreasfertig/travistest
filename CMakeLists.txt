@@ -6,7 +6,7 @@ set(INSIGHTS_LLVM_CONFIG "llvm-config" CACHE STRING "LLVM config executable to u
 
 
 add_definitions(-std=c++1z)
-
+    message(STATUS "PATH=$ENV{PATH}")
     find_program(LLVM_CONFIG_PATH "${INSIGHTS_LLVM_CONFIG}")    
     if(NOT LLVM_CONFIG_PATH)
         message(FATAL_ERROR "llvm-config not found -- ${LLVM_CONFIG_PATH}: ${INSIGHTS_LLVM_CONFIG}")
