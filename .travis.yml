@@ -82,8 +82,8 @@ install:
     wget -q --continue "https://github.com/zufuliu/llvm-utils/releases/download/v19.05/LLVM_VS2017.zip"
     7z x -y ${TRAVIS_BUILD_DIR}/llvm-utils/LLVM_VS2017.zip
     ${TRAVIS_BUILD_DIR}/llvm-utils/LLVM_VS2017/install.bat
-    rm -rf /c/Program\ Files/LLVM
-    ln -s ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release /c/Program\ Files/LLVM
+    #    rm -rf /c/Program\ Files/LLVM
+    #    ln -s ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release /c/Program\ Files/LLVM
   fi
 before_script:
 - export CXX=${COMPILER}
