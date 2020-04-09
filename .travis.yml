@@ -109,9 +109,13 @@ before_script:
 
 script:
 #- export TAG_NAME=$(git describe --exact-match)    
-- cmake --build .
+- cmake --build . --config Release
+- |   
+  if [[ "${TRAVIS_OS_NAME}" == "windows" ]]; then
+    echo "need to copy"
+  fi
 - ls -l
-- ls -l x64
+- ls -lR x64
 - |
   if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       mv ${TRAVIS_BUILD_DIR}/build/travistest ${TRAVIS_BUILD_DIR}/build/travistest_osx
