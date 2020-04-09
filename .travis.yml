@@ -52,6 +52,7 @@ install:
   if [[ "${TRAVIS_OS_NAME}" == "windows" ]]; then
     mkdir -p ${TRAVIS_BUILD_DIR}/clang-windows
     cd ${TRAVIS_BUILD_DIR}/clang-windows
+    LLVM_VERSION="10.0.0"
     CACHED_LLVM_VERSION="0"
     if [ -f "downloaded" ]; then
         CACHED_LLVM_VERSION="`cat downloaded`"
