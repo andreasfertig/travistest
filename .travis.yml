@@ -46,7 +46,7 @@ matrix:
         - zlib1g-dev
     env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
   - os: windows
-    env: COMPILER='clang++-10' COMPILER_CC='gcc-8' LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config'
+    env: COMPILER='clang++-10' COMPILER_CC='gcc-8' LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config.exe'
 install:
 - "${TRAVIS_BUILD_DIR}/scripts/travis_install.sh"
 - |   
