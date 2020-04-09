@@ -1,11 +1,13 @@
-cmake_minimum_required(VERSION 3.4.3)
+cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
+# 3.8* is required because of C++17 support
+
+set(CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
 
 project (travistest)
 
 set(INSIGHTS_LLVM_CONFIG "llvm-config" CACHE STRING "LLVM config executable to use")
 
-
-add_definitions(-std=c++1z)
 
 if(NOT LLVM_CONFIG_PATH)
     set(INSIGHTS_LLVM_CONFIG "llvm-config")
@@ -50,6 +52,9 @@ endif()
         #            string(REGEX REPLACE "-fuse-ld=gold" "" CONFIG_OUTPUT "${CONFIG_OUTPUT}")
         #        endif()
 
+        # Since Clang 10 of ziglang C++14 is set
+        string(REGEX REPLACE "-std[:=]+c\\+\\+[0-9][0-9]" "" CONFIG_OUTPUT "${CONFIG_OUTPUT}")
+        
         # make result available outside
         set(${VARNAME} ${CONFIG_OUTPUT} PARENT_SCOPE)
         

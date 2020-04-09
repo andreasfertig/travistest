@@ -86,7 +86,9 @@ before_script:
   if [[ "${TRAVIS_OS_NAME}" == "windows" ]]; then
     echo $PATH
     clang++ --version
+    echo "LLVM config ${LLVM_CONFIG}"
     ${LLVM_CONFIG} --version
+    echo "---"
     ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/clang++ --version
     cmake -G "Visual Studio 16 2019" -A x64 -T LLVM_v142 -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${LLVM_CONFIG} ..
   else
