@@ -121,3 +121,5 @@ target_link_libraries(travistest
         ${LLVM_SYSTEM_LIBS}
     )
 
+message(STATUS "CMAKE_BINARY_DIR      : ${CMAKE_BINARY_DIR}")
+
