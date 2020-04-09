@@ -107,8 +107,9 @@ before_script:
   fi
 
 script:
-- export TAG_NAME=$(git describe --exact-match)    
+#- export TAG_NAME=$(git describe --exact-match)    
 - cmake --build .
+- ls -l
 - |
   if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       mv ${TRAVIS_BUILD_DIR}/build/travistest ${TRAVIS_BUILD_DIR}/build/travistest_osx
