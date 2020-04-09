@@ -46,7 +46,7 @@ matrix:
         - zlib1g-dev
     env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
   - os: windows
-    env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config'
+    env: COMPILER='clang++-10' COMPILER_CC='gcc-8' LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config'
 install:
 - "${TRAVIS_BUILD_DIR}/scripts/travis_install.sh"
 - |   
@@ -71,6 +71,8 @@ install:
     wget -q --continue "https://github.com/zufuliu/llvm-utils/releases/download/v19.05/LLVM_VS2017.zip"
     7z x ${TRAVIS_BUILD_DIR}/llvm-utils/LLVM_VS2017.zip
     ${TRAVIS_BUILD_DIR}/llvm-utils/LLVM_VS2017/install.bat
+    rm -rf /c/Program\ Files/LLVM
+    ln -s ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release /c/Program\ Files/LLVM
   fi
 before_script:
 - export CXX=${COMPILER}
@@ -86,7 +88,7 @@ before_script:
     clang++ --version
     ${LLVM_CONFIG} --version
     ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/clang++ --version
-    cmake -G "Visual Studio 16 2019" -A x64 -T LLVM_v142 -DINSIGHTS_STATIC=Yes -DLLVM_CONFIG_PATH=${LLVM_CONFIG} ..
+    cmake -G "Visual Studio 16 2019" -A x64 -T LLVM_v142 -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${LLVM_CONFIG} ..
   else
     cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
   fi
