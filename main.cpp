@@ -14,5 +14,5 @@ inline void Printf(const char* fmt, Args&&... args)
 
 int main()
 {
-    Printf("Hello", " ", "World");
+    Printf("Hello", " ", "World")
 }
