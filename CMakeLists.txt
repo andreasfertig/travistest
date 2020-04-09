@@ -2,11 +2,14 @@ cmake_minimum_required(VERSION 3.4.3)
 
 project (travistest)
 
+set(INSIGHTS_LLVM_CONFIG "llvm-config" CACHE STRING "LLVM config executable to use")
+
+
 add_definitions(-std=c++1z)
 
-    find_program(LLVM_CONFIG_PATH "${INSIGHT_LLVM_CONFIG}")    
+    find_program(LLVM_CONFIG_PATH "${INSIGHTS_LLVM_CONFIG}")    
     if(NOT LLVM_CONFIG_PATH)
-        message(FATAL_ERROR "llvm-config not found -- ${LLVM_CONFIG_PATH}: ${INSIGHT_LLVM_CONFIG}")
+        message(FATAL_ERROR "llvm-config not found -- ${LLVM_CONFIG_PATH}: ${INSIGHTS_LLVM_CONFIG}")
     else()
         message(STATUS "Found LLVM_CONFIG_PATH: ${LLVM_CONFIG_PATH}")
     endif()    
