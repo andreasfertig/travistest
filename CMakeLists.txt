@@ -7,6 +7,10 @@ set(INSIGHTS_LLVM_CONFIG "llvm-config" CACHE STRING "LLVM config executable to u
 
 add_definitions(-std=c++1z)
 
+if(NOT LLVM_CONFIG_PATH)
+    set(INSIGHTS_LLVM_CONFIG "llvm-config")
+    message(STATUS "1INSIGHTS=|${INSIGHTS_LLVM_CONFIG}|")
+endif()
 
     message(STATUS "PATH=$ENV{PATH}")
     message(STATUS "INSIGHTS=|${INSIGHTS_LLVM_CONFIG}|")
