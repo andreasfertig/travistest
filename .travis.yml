@@ -45,13 +45,14 @@ matrix:
         - zlib1g-dev
     env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
   - os: windows
-    env: COMPILER='clang++-10' COMPILER_CC='gcc-8' LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config.exe' LLVM_VERSION="10.0.0"
+    env: COMPILER='clang++-10' COMPILER_CC='gcc-8' LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config.exe' LLVM_VERSION='10.0.0'
 install:
 - "${TRAVIS_BUILD_DIR}/scripts/travis_install.sh"
 - |   
   if [[ "${TRAVIS_OS_NAME}" == "windows" ]]; then
     mkdir -p ${TRAVIS_BUILD_DIR}/clang-windows
     cd ${TRAVIS_BUILD_DIR}/clang-windows
+    echo "Env: ${LLVM_VERSION}"
     LLVM_VERSION="10.0.0"
     CACHED_LLVM_VERSION="0"
     if [ -f "downloaded" ]; then
@@ -111,10 +112,15 @@ script:
 #- export TAG_NAME=$(git describe --exact-match)    
 - cmake --build .
 - ls -l
+- ls -l x86
 - |
   if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       mv ${TRAVIS_BUILD_DIR}/build/travistest ${TRAVIS_BUILD_DIR}/build/travistest_osx
   fi
+  
+env:
+  global:
+  - LLVM_VERSION='10.0.0'
   
 # deploy:
 #   provider: releases
