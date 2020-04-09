@@ -90,7 +90,8 @@ before_script:
     ${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/clang++ --version
     cmake -G "Visual Studio 16 2019" -A x64 -T LLVM_v142 -DINSIGHTS_STATIC=Yes -DINSIGHTS_LLVM_CONFIG=${LLVM_CONFIG} ..
   else
-    cmake -DINSIGHT_LLVM_CONFIG=${LLVM_CONFIG} ..
+    echo "USING NOT WINDOWS!!!!"
+    cmake -DINSIGHTS_LLVM_CONFIG=${LLVM_CONFIG} ..
   fi
 
 script:
