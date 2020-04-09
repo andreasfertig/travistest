@@ -112,6 +112,8 @@ script:
 - cmake --build . --config Release
 - ls -lR 
 - cat ./x64/Release/ZERO_CHECK/ZERO_CHECK.tlog/ZERO_CHECK.lastbuildstate
+- cat ./travistest.dir/Release/travistest.tlog/link.command.1.tlog
+- cat ./travistest.dir/Release/travistest.tlog/CustomBuild.read.1.tlog
 - |   
   if [[ "${TRAVIS_OS_NAME}" == "windows" ]]; then
     echo "need to copy"
