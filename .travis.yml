@@ -2,7 +2,6 @@ language: cpp
 sudo: false
 dist: bionic
 
-
 cache:
 #  branch: bash
   directories:
@@ -46,21 +45,30 @@ matrix:
         - zlib1g-dev
     env: COMPILER='g++-8' COMPILER_CC='gcc-8' LLVM_CONFIG='/usr/bin/llvm-config-7'
   - os: windows
-    env: COMPILER='clang++-10' COMPILER_CC='gcc-8' LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config.exe'
+    env: COMPILER='clang++-10' COMPILER_CC='gcc-8' LLVM_CONFIG=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin/llvm-config.exe' LLVM_VERSION="10.0.0"
 install:
 - "${TRAVIS_BUILD_DIR}/scripts/travis_install.sh"
 - |   
   if [[ "${TRAVIS_OS_NAME}" == "windows" ]]; then
     mkdir -p ${TRAVIS_BUILD_DIR}/clang-windows
     cd ${TRAVIS_BUILD_DIR}/clang-windows
-    #    wget -q --continue --directory-prefix=$HOME/Library/Caches/Homebrew https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/8.0.0/llvm+clang-8.0.0-win64-msvc-release.tar.xz
-    wget -q --continue https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/10.0.0/llvm+clang-10.0.0-win64-msvc-release.tar.xz
-    mv llvm+clang-10.0.0-win64-msvc-release.tar.xz llvm.tar.xz
-    ls -l
-    7z x -y ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar.xz
-    7z x -y ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar
-    rm -f llvm.tar    
-    ls -l llvm+clang-10.0.0-win64-msvc-release/bin
+    CACHED_LLVM_VERSION="0"
+    if [ -f "downloaded" ]; then
+        CACHED_LLVM_VERSION="`cat downloaded`"
+    fi
+
+    if [ "${CACHED_LLVM_VERSION}" != "${LLVM_VERSION}" ]; then
+        wget -q --continue https://github.com/andreasfertig/cppinsights-compiler-binaries/releases/download/10.0.0/llvm+clang-10.0.0-win64-msvc-release.tar.xz
+        ln -sf llvm+clang-10.0.0-win64-msvc-release.tar.xz llvm.tar.xz
+        ls -l
+        7z x -y ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar.xz
+        7z x -y ${TRAVIS_BUILD_DIR}//clang-windows//llvm.tar
+        rm -f llvm.tar
+        echo -n "${LLVM_VERSION}" > downloaded
+    else
+        echo "LLVM version already installed"
+    fi
+
     export "PATH=${TRAVIS_BUILD_DIR}/clang-windows/llvm+clang-10.0.0-win64-msvc-release/bin;$PATH"
     choco install visualstudio2019community
     choco install visualstudio2019-workload-nativedesktop

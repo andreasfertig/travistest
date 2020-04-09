@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 project (travistest)
 
+if(NOT WIN32)
+    option(INSIGHTS_STATIC     "Use static linking"        Off)
+endif()
+
 set(INSIGHTS_LLVM_CONFIG "llvm-config" CACHE STRING "LLVM config executable to use")
 
 
@@ -23,6 +27,20 @@ endif()
         message(STATUS "Found LLVM_CONFIG_PATH: ${LLVM_CONFIG_PATH}")
     endif()    
 
+    if(INSIGHTS_STATIC)
+        if(APPLE)
+            message(STATUS "Static linking may not be possible on OSX")
+        else()
+            set(LIB_TYPE "--link-static")
+        endif()
+
+        if(WIN32)
+            add_definitions(/MT)
+        else()
+            set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -static")
+        endif()
+    endif()
+    
     function(llvm_config VARNAME switch)
         set(CONFIG_COMMAND "${LLVM_CONFIG_PATH}" "${switch}")
         
