@@ -76,6 +76,7 @@ install:
     choco install visualstudio2019community
     choco install visualstudio2019-workload-nativedesktop
     choco install visualstudio2019buildtools
+    choco install llvm --version=10.0.0
     mkdir -p ${TRAVIS_BUILD_DIR}/llvm-utils
     cd ${TRAVIS_BUILD_DIR}/llvm-utils
     export VS160COMNTOOLS="/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/Tools"
@@ -110,7 +111,7 @@ before_script:
 script:
 #- export TAG_NAME=$(git describe --exact-match)    
 - cmake --build . --config Release
-- ls -lR 
+- ls -l Release
 - cat ./x64/Release/ZERO_CHECK/ZERO_CHECK.tlog/ZERO_CHECK.lastbuildstate
 - cat ./travistest.dir/Release/travistest.tlog/link.command.1.tlog
 - cat ./travistest.dir/Release/travistest.tlog/CustomBuild.read.1.tlog
